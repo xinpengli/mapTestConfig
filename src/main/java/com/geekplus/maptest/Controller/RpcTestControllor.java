@@ -4,6 +4,7 @@ package com.geekplus.maptest.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,14 +17,17 @@ import java.util.Random;
  * athena测试平台，rpc任务下发接口
  * @author wanghao
  */
-@RestController
+@Controller
 @RequestMapping("/rpc")
 public class RpcTestControllor {
 
 
 
+@RequestMapping("/index")
+public String login(){
 
-
+    return "robot";
+}
 
 
 

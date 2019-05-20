@@ -1,0 +1,39 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.divBox{
+    height:500px;
+
+}
+.left{
+    float: left;
+    width: 200px;
+    height: 100%;
+    background: #9FB4D9;
+}
+.list{
+    font-weight: bold;
+    margin: 0 20px;
+}
+.right{
+    margin-left: 200px;
+
+    height: 100%;
+}
+.botom{
+    float: bottom;
+
+    background:#9FB4D9;
+    height: 100%;
+    width: 100%;
+}
+
+.footer{
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+}
+
+ 

@@ -1,0 +1,23 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head >
+    <title>athena测试(picking)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div class="divBox">
+
+<div class="right">
+    <form id="uploadForm" enctype="multipart/form-data">
+<!--
+	//后端controller通过@requestParam(空间name file)
+-->
+        <input id="file" type="file" name="file"/>
+
+        <input type="button" value="upload" onclick="upload()"/>
+    </form>
+</div>
+</div>
+
+</body>
+</html>
