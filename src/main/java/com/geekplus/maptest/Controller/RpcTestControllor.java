@@ -48,7 +48,10 @@ public class RpcTestControllor {
                   }
                 //BufferedOutputStream 写入file.getOriginalFilename()文件里，写文件
                 BufferedOutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(file1));
+                        new FileOutputStream(new File("/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/"+file.getOriginalFilename())));
+
+
+//                        new FileOutputStream(new File("C:\\Users\\lixinpeng"+file.getOriginalFilename())));
                 System.out.println(file.getName());
 				//file.getBytes(),返回文件内容的二进制数组数据byte[],BufferedOutputStream.write（byte[] b）写入将b.length个二进制数据写入文件流
                 out.write(file.getBytes());
