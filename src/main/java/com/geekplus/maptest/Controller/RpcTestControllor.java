@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +22,19 @@ import java.util.Random;
 @RequestMapping("/rpc")
 public class RpcTestControllor {
 
+    @RequestMapping("/modify")
+    public String modifySystmeConfig(@RequestParam("name") String name, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
 
+      response.getWriter().write( "<script>alert('"+name+"');</script>");
+   //   response.getWriter().write( name);
+        response.getWriter().flush();
+
+
+        return "robot";
+
+
+    }
 
 @RequestMapping("/index")
 public String login(){
@@ -32,10 +45,10 @@ public String login(){
 
 
 
-    @RequestMapping("/maptest")
-    @ResponseBody
+    @RequestMapping(value="/maptest",method =RequestMethod.POST)
+//    @ResponseBody
 	//获取前端data传过来的控件name=file的filew文件，且定义为MultipartFile类型的file变量，MultipartFile为获取formdate类型的file类型
-    public String testRobot(@RequestParam("file") MultipartFile file){
+    public String testRobot(@RequestParam("file") MultipartFile file,HttpServletResponse response){
 
         if (!file.isEmpty()) {
             try {
@@ -45,14 +58,15 @@ public String login(){
                  * 这里只是简单一个例子,请自行参考，融入到实际中可能需要大家自己做一些思考，比如： 1、文件路径； 2、文件名；
                  * 3、文件格式; 4、文件大小的限制;*/
                   File file1 = new File(
-                        "D:", file.getOriginalFilename());
+                        "C:", file.getOriginalFilename());
                   if (file1.exists()){
                       System.out.println(file1.getPath());
                       file1.delete();
                   }
                 //BufferedOutputStream 写入file.getOriginalFilename()文件里，写文件
                 BufferedOutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(new File("/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/"+file.getOriginalFilename())));
+//                        new FileOutputStream(new File("/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/"+file.getOriginalFilename())));
+                        new FileOutputStream(file1));
 
 
 //                        new FileOutputStream(new File("C:\\Users\\lixinpeng"+file.getOriginalFilename())));
@@ -62,8 +76,13 @@ public String login(){
 
                 out.flush();
                 out.close();
-               String fileString= out.toString();
-                return fileString ;
+//               String fileString= out.toString();
+                response.setContentType("text/html;charset=utf-8");
+
+                response.getWriter().write( "<script>alert('"+ file1.getPath()+"');</script>");
+                //   response.getWriter().write( name);
+                response.getWriter().flush();
+                return  "robot" ;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 return "上传失败," + e.getMessage();

@@ -1,6 +1,6 @@
 <!DOCTYPE>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="public :: #head">
+<head th:replace="public :: #head_id">
     <title>athena测试(picking)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -11,22 +11,48 @@
 
 </head>
 
+
 <body>
 <div class="divBox">
-    <div class="" th:replace="public :: #left">
+    <div th:replace="public :: #left_id"></div>
 
-    </div>
-    <div th:replace="public :: #botom"></div>
 <div class="right">
-    <form id="uploadForm" enctype="multipart/form-data">
-<!--
-	//后端controller通过@requestParam(空间name file)
--->
-        <input id="file" type="file" name="file"/>
+    <br />
+    <label>1:上传map文件 <br /> <br /> </label>
+    <form id="uploadForm" action="/rpc/maptest"  method="post" style="float: left;  text-align: left" enctype="multipart/form-data">
 
-        <input type="button" value="upload" onclick="upload()"/>
+    <!--
+        //后端controller通过@requestParam(空间name file)
+    -->
+    <input id="file" type="file" name="file"/>
+
+    <!--<input type="button" value="上传" onclick="upload()"/>-->
+    <input type="submit" value="上传" />
+
+</form>
+    <br /> <br />
+    <label>2:修改配置文件重启<br /> <br /> </label>
+    <form id="data"  style="text-align: left" action="/rpc/modify" enctype="multipart/form-data">
+        <!--
+            //后端controller通过@requestParam(空间name file)
+        -->
+        <!--<input  type="text" name="name"/>-->
+        地图生成方式： <select name="mapGe" class="language-code form-control">
+        <option value="xml" selected>with_start_bound</option>
+        <option value="database">no_start_bound</option>
+
+    </select>
+
+        地图类型： <select id="mode" class="language-code form-control">
+        <option value="xml" selected>XML</option>
+        <option value="database">DATABASE</option>
+
+    </select>
+
+        <input type="submit" value="提交"/>
     </form>
 </div>
+    <div th:replace="public :: #botom_id">123</div>
 </div>
 
 </body>
