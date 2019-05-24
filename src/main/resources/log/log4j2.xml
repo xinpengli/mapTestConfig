@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<properties>
+		<property name="LOG_HOME">/var/log/geekplus/test/athenatest</property>
+	</properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss:SSS}	%p [%t][%c{1}] - %m%n" />
+		</Console>
+		
+		<RollingFile name="RollingFile" fileName="${LOG_HOME}/athenatest.log" filePattern="${LOG_HOME}/$${date:yyyy-MM}/beetle-%d{yyyy-MM-dd-HH}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} %p [%t][%c{1}] - %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="250 MB" />
+			</Policies>
+		</RollingFile>
+		
+		<RollingRandomAccessFile name="RobotServerLoggerFile" fileName="${LOG_HOME}/robot/server.log" filePattern="${LOG_HOME}/robot/$${date:yyyy-MM-dd}/server-%d{yyyy-MM-dd-HH}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} %p - %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="250 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="200" />
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="RobotProtocolMessageLoggerFile" fileName="${LOG_HOME}/robot/protocol-message.log" filePattern="${LOG_HOME}/robot/$${date:yyyy-MM-dd}/protocol-message-%d{yyyy-MM-dd-HH}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS}|%m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="250 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="200" />
+		</RollingRandomAccessFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+		<Logger name="RobotServerLogger" level="info" additivity="false">
+			<AppenderRef ref="RobotServerLoggerFile" />
+		</Logger>
+		<Logger name="RobotProtocolMessageLogger" level="debug" additivity="false">
+			<AppenderRef ref="RobotProtocolMessageLoggerFile" />
+		</Logger>
+	</Loggers>
+
+</Configuration>
