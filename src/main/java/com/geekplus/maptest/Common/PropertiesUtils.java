@@ -7,12 +7,13 @@ import java.io.*;
 import java.util.Properties;
 
 @Component
-public class PropertiesUtill {
-public String filepath;
-public void PropertiesUtill(String filepath){
-    this.filepath=filepath;
-}
-    public  void replacePro(String key,String value) throws IOException {
+public class PropertiesUtils {
+
+
+
+
+    public  void replacePro(String filepath,
+                            String key, String value) throws IOException {
 
 
 

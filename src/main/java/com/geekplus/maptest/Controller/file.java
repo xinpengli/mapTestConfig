@@ -18,7 +18,8 @@ public class file {
         System.out.println(classLoadre);
         System.out.println(classLoadre.getFile());*/
         File file= new File("123.txt");
-        String profilepath = file.class.getResource("/").getPath()+"application.properties";//我的配置文件在src根目录下
+        String profilepath = file.class.getResource("/").getPath()+"start.sh";//我的配置文件在src根目录下
+        System.out.println(profilepath);
         try {
             Properties props=new Properties();
             props.load(new FileInputStream(profilepath));

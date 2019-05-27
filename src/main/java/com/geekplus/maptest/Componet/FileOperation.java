@@ -1,17 +1,17 @@
 package com.geekplus.maptest.Componet;
 
-import com.geekplus.maptest.Common.PropertiesUtill;
+import com.geekplus.maptest.Common.PropertiesUtils;
+import com.geekplus.maptest.Controller.file;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import sun.text.normalizer.Replaceable;
 
 import java.io.*;
 @Component
 public class FileOperation {
 
 @Autowired
-  public   PropertiesUtill propertiesUtil;
+  public PropertiesUtils propertiesUtil;
 
     public String replacefile(MultipartFile file,String filePath){
 
@@ -56,14 +56,15 @@ return "success";
         }
     }
 
-    public void replaceProperties(MultipartFile file,String filePath){
-
-        propertiesUtil.filepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/sysconfig.properties";
 
 
+    public void executXhshell(String filename) throws IOException, InterruptedException {
+        String shellFile = file.class.getResource("/").getPath()+filename;
 
 
+        Process ps = Runtime.getRuntime().exec(shellFile);
 
+        ps.waitFor();
     }
 
 }
