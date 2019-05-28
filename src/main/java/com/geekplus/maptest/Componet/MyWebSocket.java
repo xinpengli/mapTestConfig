@@ -27,7 +27,11 @@ public class MyWebSocket {
     private volatile static List<Session> sessions = Collections.synchronizedList(new ArrayList());
 
 
-    File file= new File("C:\\var\\log\\geekplus\\tomcat-rms\\athena\\athena.log");
+    File athenafile= new File("C:\\var\\log\\geekplus\\tomcat-rms\\athena\\athena.log");
+   File athenaTollsfile= new File("C:\\var\\log\\geekplus\\test\\athenatest\\athenatest.log");
+   File file;
+//    File file= new File("C:\\var\\log\\geekplus\\test\\athenatest\\athenatest.log");
+
     /**
      * 连接建立成功调用的方法*/
     @OnOpen
@@ -38,20 +42,60 @@ public class MyWebSocket {
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
-          Timer timer = new Timer("api-callback");
+
+    }
+
+    /**
+     * 连接关闭调用的方法
+     */
+    @OnClose
+    public void onClose() throws IOException {
+        sessions.remove(this.session);
+        webSocketSet.remove(this);  //从set中删除
+        subOnlineCount();           //在线数减1
+        System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+
+    }
+
+    /**
+     * 收到客户端消息后调用的方法
+     *
+     * @param message 客户端发送过来的消息*/
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        System.out.println("来自客户端的消息:" + message);
+
+        //群发消息
 
 
-     ;
+        Timer timer = new Timer("api-callback");
+
+
+        ;
         try {
             sendMessage("服务器消息：连接成功");
             for (MyWebSocket item : webSocketSet) {
                 if(this.session.isOpen()){
 
+                    if (message.equals("athena")){
+                        file=athenafile;
 
+
+                    }else if (message.equals("athenatest")){
+                        file=athenaTollsfile;
+                    }
                     long lastTimeFileSize = 0;
+                    String tmp = null;
+                    RandomAccessFile randomFile1 = new RandomAccessFile(file,"r");
+                    randomFile1.seek(lastTimeFileSize);
+                    while ((tmp = randomFile1.readLine()) != null) {
+                        item.sendMessage(tmp);
+                    }
+
                     // 系统启动10秒后，每200毫秒调用一次callback方法
                     timer.schedule(new TimerTask() {
-                        long     lastTimeFileSize = file.length();
+
+long lastTimeFileSize=file.length();
 
                         @Override
                         public void run() {
@@ -99,50 +143,6 @@ public class MyWebSocket {
 
         } catch (IOException e) {
             System.out.println("IO异常");
-        }
-    }
-
-    /**
-     * 连接关闭调用的方法
-     */
-    @OnClose
-    public void onClose() throws IOException {
-        sessions.remove(this.session);
-        webSocketSet.remove(this);  //从set中删除
-        subOnlineCount();           //在线数减1
-        System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
-
-    }
-
-    /**
-     * 收到客户端消息后调用的方法
-     *
-     * @param message 客户端发送过来的消息*/
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        System.out.println("来自客户端的消息:" + message);
-
-        //群发消息
-        for (MyWebSocket item : webSocketSet) {
-                Timer timer = new Timer();
-
-                    // 系统启动10秒后，每200毫秒调用一次callback方法
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            try {
-                                item.sendMessage(message);
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, 10_000, 5000);
-
-
-
-
         }
     }
 

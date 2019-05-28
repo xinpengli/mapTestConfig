@@ -3,6 +3,7 @@ package com.geekplus.maptest.Controller;
 
 
 import com.geekplus.maptest.Common.PropertiesUtils;
+import com.geekplus.maptest.Common.YmlUtils;
 import com.geekplus.maptest.Componet.FileOperation;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,10 @@ public class RpcTestControllor {
 
 
     @RequestMapping("/modify")
-    public String modifySystmeConfig(@RequestParam("mapGe") String mapg,@RequestParam("mode") String mode, HttpServletResponse response) throws IOException {
+    public String modifySystmeConfig(@RequestParam("mapGe") String mapg,@RequestParam("mode") String mode, HttpServletResponse response) throws IOException, InterruptedException {
 String sysFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/sysconfig.prpperties";
 String appliFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/application.properties";
-String testTollspath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/application.properties";
+File testTollsFile=new  File("/home/test-tools/athena-test-3.1/resources/application.yml");
 
 
 
@@ -45,7 +46,7 @@ switch (mode){
         propertiesUtils.replacePro(sysFilepath,"map.resolver","transportDatabseMapResolver");
         propertiesUtils.replacePro(appliFilepath,"spring.profiles.active","global,netty,db,transport");
 
-
+        YmlUtils.addIntoYml(testTollsFile,"map.resolver","Database");
 
 
 
@@ -62,11 +63,31 @@ switch (mode){
             propertiesUtils.replacePro(sysFilepath,"map.resolver","pickingXmlMapResolver");
             propertiesUtils.replacePro(appliFilepath,"spring.profiles.active","global,netty,db,picking");
         propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","no_start_bound");
+        YmlUtils.addIntoYml(testTollsFile,"map.resolver","Xml");
+        break;
+    case "NOShelfArea" :
+        propertiesUtils.replacePro(sysFilepath,"map.resolver","transportDatabseMapResolver");
+        propertiesUtils.replacePro(appliFilepath,"spring.profiles.active","global,netty,db,transport");
+        YmlUtils.addIntoYml(testTollsFile,"map.resolver","NOShelfArea");
+
+
+
+
+        if (mapg.equals("with_start_bound")){
+            propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","with_start_bound");
+
+        }else  if(mapg.equals("no_start_bound")){
+            propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","no_start_bound");
+
+        }
         break;
         default:
             logger.warn("传入值"+mode+"不存在");
 
 }
+
+        fileOperation.executXhshell("stop.sh");
+        fileOperation.executXhshell("stop-tools.sh");
 
         response.setContentType("text/html;charset=utf-8");
 
@@ -87,6 +108,12 @@ public String login(){
     return "index";
 }
 
+    @RequestMapping("/robot")
+    public String robot(){
+
+
+        return "robot";
+    }
 
 
 

@@ -59,7 +59,7 @@ return "success";
 
 
     public void executXhshell(String filename) throws IOException, InterruptedException {
-        String shellFile = file.class.getResource("/").getPath()+filename;
+        String shellFile = FileOperation.class.getResource("/").getPath()+filename;
 
 
         Process ps = Runtime.getRuntime().exec(shellFile);
