@@ -1,6 +1,5 @@
 package com.geekplus.maptest.Common;
 
-import com.geekplus.maptest.Controller.file;
 import org.springframework.stereotype.Component;
 
 import java.io.*;

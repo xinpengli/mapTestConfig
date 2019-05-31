@@ -1,7 +1,6 @@
 package com.geekplus.maptest.Componet;
 
 import com.geekplus.maptest.Common.PropertiesUtils;
-import com.geekplus.maptest.Controller.file;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +61,7 @@ return "success";
         String shellFile = FileOperation.class.getResource("/").getPath()+filename;
 
 
-        Process ps = Runtime.getRuntime().exec(shellFile);
+        Process ps = Runtime.getRuntime().exec("sh "+shellFile);
 
         ps.waitFor();
     }

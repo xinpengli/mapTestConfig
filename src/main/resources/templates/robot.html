@@ -13,13 +13,94 @@
 
 
 <body>
+<script type="text/javascript">
+
+    /*显示3秒隐藏setTimeout("document.getElementById('div1').style.display='none'",3000);*/
+
+   /* window.href.location="/rpc/robot";*/
+    function upload() {
+/*ajax在不刷新页面情况跟后台交互，前台可提示返回信息是json对象*/
+        $.ajax({
+            url: "http://"+location.hostname+":61118/rpc/replaceFile",
+            type : "post",
+            cache: false,
+            data:  new FormData($('#uploadForm')[0]),
+            processData: false,
+            //不用指定类型 form 得entype已经指定
+            contentType: false,
+            success: function( result ) {
+                console.log(result);
+console.log(result.msg);
+             /* document.getElementById("div1").value=*/
+
+
+                alert(result.msg);
+
+             /*   var responseText = document.getElementById("responseText");
+                responseText.value=result;*/
+
+            }
+        });
+    }
+    function change(){
+
+      alert( $('#data').serialize());
+        $.ajax({
+            url: "http://"+location.hostname+":61118/rpc/modify",
+            type : "post",
+            cache: false,
+            data: $('#data').serialize(),
+            processData: false,
+            //不用指定类型 form 得entype已经指定
+            contentType: false,
+            success: function( result ) {
+                console.log(result);
+                console.log(result.msg);
+                /* document.getElementById("div1").value=*/
+
+
+                alert(result.msg);
+
+                /*   var responseText = document.getElementById("responseText");
+                   responseText.value=result;*/
+
+            }
+        });
+
+
+    }
+    function send() {
+
+      /*  document.getElementById('message').value="";
+        var servername= $("#serverid").val();
+        websocket.send(servername);*/
+
+        $("#formdata").action="/rpc/"+$("#serverid").val();
+        $("#formdata").submit();
+
+        /*$.ajax({
+            type: "get", // 以get方式发起请求
+            // url: "http://"+location.hostname+":8080/rpc/startService?way=" + $("#serverid").val(), // 将你的请求参数以问号拼接到url中进行参数传递
+            url: "http://"+location.hostname+":8080/rpc/"+ $("#serverid").val() , // 将你的请求参数以问号拼接到url中进行参数传递
+            success: function( result ) {
+
+
+            }
+        })*/
+
+
+    }
+
+</script>
 <div class="divBox">
     <div th:replace="public :: #left_id"></div>
 
 <div class="right">
+    <!-- <div id="div1" th:text="${msg}"th:if="${not #strings.isEmpty(msg)}"     style="color:green; display: block; margin-left: 900px ;background:#9FB4D9;"></div>-->
     <br />
     <label>1:上传map文件 <br /> <br /> </label>
-    <form id="uploadForm" action="/rpc/maptest"  method="post" style="float: left;  text-align: left" enctype="multipart/form-data">
+
+    <form id="uploadForm" action="/rpc/replaceFile"  method="post" style="float: left;  text-align: left" enctype="multipart/form-data">
 
     <!--
         //后端controller通过@requestParam(空间name file)
@@ -27,12 +108,12 @@
     <input id="file" type="file" name="file"/>
 
     <!--<input type="button" value="上传" onclick="upload()"/>-->
-    <input type="submit" value="上传" />
+    <input type="button" value="上传" onclick="upload()" />
 
 </form>
     <br /> <br />
-    <label>2:修改配置文件重启<br /> <br /> </label>
-    <form id="data"  style="text-align: left" action="/rpc/modify" enctype="multipart/form-data">
+    <label>2:修改配置文件<br /> <br /> </label>
+    <form id="data"  style="text-align: left" action="/rpc/modify" method="post">
         <!--
             //后端controller通过@requestParam(空间name file)
         -->
@@ -43,14 +124,31 @@
 
     </select>
 
-        地图类型： <select id="mode" class="language-code form-control">
+        地图类型(初始化货架类型)： <select name="mode" class="language-code form-control">
         <option value="xml" selected>XML</option>
         <option value="database">DATABASE</option>
+        <option value="NOShelfArea">NOShelfArea</option>
+
 
     </select>
 
-        <input type="submit" value="提交"/>
+
+
+        <input type="button" value="提交" onclick="change()"/>
     </form>
+    <br /> <br />
+    <label>3:重启系统 <br /> <br /> </label>
+    <form id="formdata" action="/rpc/startservice" method="get">
+        <br/>
+        <select name="way" id="serverid">
+            <option value="athena" selected>RMS系统</option>
+            <option value="athenatest">测试工具(初始化货架)</option>
+        </select>
+        <button id="sbmit" type="submit">重启系统</button>
+
+    </form>
+    <br />
+   <!-- <textarea  id="message"  style=" width: 1358px; height: 500px;"> </textarea>-->
 </div>
     <div th:replace="public :: #botom_id">123</div>
 </div>

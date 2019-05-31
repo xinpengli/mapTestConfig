@@ -27,8 +27,8 @@ public class MyWebSocket {
     private volatile static List<Session> sessions = Collections.synchronizedList(new ArrayList());
 
 
-    File athenafile= new File("C:\\var\\log\\geekplus\\tomcat-rms\\athena\\athena.log");
-   File athenaTollsfile= new File("C:\\var\\log\\geekplus\\test\\athenatest\\athenatest.log");
+    File athenafile= new File("/var/log/geekplus/tomcat-rms/athena/athena.log");
+   File athenaTollsfile= new File("/var/log/geekplus/test/athenatest/athenatest.log");
    File file;
 //    File file= new File("C:\\var\\log\\geekplus\\test\\athenatest\\athenatest.log");
 
@@ -85,12 +85,7 @@ public class MyWebSocket {
                         file=athenaTollsfile;
                     }
                     long lastTimeFileSize = 0;
-                    String tmp = null;
-                    RandomAccessFile randomFile1 = new RandomAccessFile(file,"r");
-                    randomFile1.seek(lastTimeFileSize);
-                    while ((tmp = randomFile1.readLine()) != null) {
-                        item.sendMessage(tmp);
-                    }
+
 
                     // 系统启动10秒后，每200毫秒调用一次callback方法
                     timer.schedule(new TimerTask() {
@@ -109,7 +104,17 @@ long lastTimeFileSize=file.length();
                                     randomFile.seek(lastTimeFileSize);
 
                                     while ((tmp = randomFile.readLine()) != null) {
-                                        item.sendMessage(tmp);
+
+                                            item.sendMessage(tmp);
+
+
+//                                        if (item.session.isOpen()){
+//                                            item.sendMessage(tmp);
+//
+//                                        }else {
+//                                            timer.cancel();
+//                                        }
+
                                     }
                                     lastTimeFileSize = randomFile.length();
                                 }else{
@@ -122,8 +127,8 @@ long lastTimeFileSize=file.length();
 //                                String readStr=  fileReader.readString();
 
 
-
                                 System.out.println("发送信息");
+
 
                             } catch (IOException e) {
                                 e.printStackTrace();

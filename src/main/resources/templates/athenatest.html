@@ -1,0 +1,111 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:height="http://www.w3.org/1999/xhtml"
+      xmlns:width="http://www.w3.org/1999/xhtml">
+<head th:replace="public :: #head_id">
+    <title>athena测试(picking)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+<script type="text/javascript">
+    var websocket = null;
+    if('WebSocket' in window ){
+        websocket = new WebSocket("ws://127.0.0.1:61118/websocket");
+    }
+    else{
+        alert('Not support websocket')
+    }
+
+    function openInte() {
+        var inter=window.setInterval(scrollbot,200);
+    }
+    function stopInte() {
+
+        clearInterval(inter);
+    }
+    function scrollbot() {
+        // document.getElementById("message").scrollTo(0,document.getElementById("message").scrollHeight);
+        var scroll= document.getElementById("message");
+        scroll.scrollTop =   scroll.scrollHeight;
+        //    window.scrollTo(0,document.body.scrollHeight);
+        // $("#message").object.scrollHeight
+    }
+
+
+
+    //连接发生错误的回调方法
+    websocket.onerror = function(){
+        setMessageInnerHTML("error");
+    };
+
+    //连接成功建立的回调方法
+    websocket.onopen = function(event){
+        setMessageInnerHTML("open");
+        send()
+    }
+
+    //接收到消息的回调方法
+    websocket.onmessage = function(event){
+        setMessageInnerHTML(event.data);
+    }
+
+    //连接关闭的回调方法
+    websocket.onclose = function(){
+        setMessageInnerHTML("close");
+    }
+
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function(){
+        websocket.close();
+
+    }
+
+
+    //将消息显示在网页上
+    function setMessageInnerHTML(innerHTML){
+        // document.getElementById('message').innerText = document.getElementById('message').innerText+"<br\>"+innerHTML;
+        document.getElementById('message').value = document.getElementById('message').value+"\n"+innerHTML;
+        // $("#message").value+= innerHTML + '<br/>';
+    }
+
+    //关闭连接
+    function closeWebSocket(){
+        websocket.close();
+    }
+
+    //发送消息
+    function send(){
+        //点击触发submit
+
+        //判断当前浏览器是否支持WebSocket，然后启动
+
+
+
+        /*   var message = String(document.getElementById('text').value);
+          var servername= $("#serverid").options.item($("#serverid").options.selectedIndex).value;*/
+        websocket.send("athenatest");
+
+
+    }
+</script>
+
+<div class="divBox">
+    <div th:replace="public :: #left_id"></div>
+    <div class="right">
+        <br />
+<lable>athenatest日志：</lable>
+<br />
+
+<textarea  id="message"  style=" width: 1358px; height: 750px;"> </textarea>
+<!--
+<div   id="message" style=" width: 1358px; height: 200px; scroll-padding-bottom: revert"> </div>
+-->
+    </div>
+    <div th:replace="public :: #botom_id">123</div>
+</div>
+
+</body>
+
+
+
+</html>
