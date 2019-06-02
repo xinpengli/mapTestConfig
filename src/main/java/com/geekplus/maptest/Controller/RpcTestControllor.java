@@ -3,6 +3,7 @@ package com.geekplus.maptest.Controller;
 
 import com.geekplus.maptest.Common.PropertiesUtils;
 import com.geekplus.maptest.Componet.FileOperation;
+import com.geekplus.maptest.entity.Sysconfig;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,8 @@ public class RpcTestControllor {
 
 @ResponseBody
     @RequestMapping(value = "/modify")
-    public Map<String, Object> modifySystmeConfig(@RequestParam("mapGe") String mapg, @RequestParam("mode") String mode, HttpServletResponse response) throws IOException, InterruptedException {
-//    public Map<String, Object> modifySystmeConfig( @RequestParam Map<String, Object> changeData) throws IOException, InterruptedException {
+   public Map<String, Object> modifySystmeConfig(@RequestParam("mapGe") String mapg, @RequestParam("mode") String mode, HttpServletResponse response) throws IOException, InterruptedException {
+//    public Map<String, Object> modifySystmeConfig( @RequestBody Sysconfig  sysconfig) throws IOException, InterruptedException {
        /* mapg=mapg.toLowerCase();
         mode=mode.toUpperCase();
 String sysFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/sysconfig.properties";

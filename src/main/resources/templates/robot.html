@@ -44,15 +44,30 @@ console.log(result.msg);
     }
     function change(){
 
-      alert( $('#data').serialize());
+
+        // alert(JSON.stringify(json));
+      /*  相当于 data:   {mapGe:"xml",mode:"XML"},的效果，此形式可以作为application/x-www-form-urlencoded',也可做为json格式发送
+ 参数用 contentType: 'application/x-www-form-urlencoded',后台用Requestparam获取
+  参数用 application/json;charset=utf-8',: ,后台用@requestbody获取json数据
+        $('#data').serialize()相当于key=value1&key2=vlue2，
+
+       */
+
+       var  json1= $('#data').serialize();
+
+
         $.ajax({
             url: "http://"+location.hostname+":61118/rpc/modify",
             type : "post",
             cache: false,
-            data: $('#data').serialize(),
-            processData: false,
+            //
+            data:   json1,
+            // processData: false,
+            //用于对参数进行参数化处理，默认true
+            // processData: true,
             //不用指定类型 form 得entype已经指定
-            contentType: false,
+           // contentType: 'application/json;charset=utf-8',
+           contentType: 'application/x-www-form-urlencoded',
             success: function( result ) {
                 console.log(result);
                 console.log(result.msg);
