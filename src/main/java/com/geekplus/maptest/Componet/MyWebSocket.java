@@ -15,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Component
 public class MyWebSocket {
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
-
+    Timer timer = new Timer("api-callback");
     private static int onlineCount = 0;
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
@@ -53,6 +53,7 @@ public class MyWebSocket {
         sessions.remove(this.session);
         webSocketSet.remove(this);  //从set中删除
         subOnlineCount();           //在线数减1
+        timer.cancel();
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
 
     }
@@ -68,7 +69,7 @@ public class MyWebSocket {
         //群发消息
 
 
-        Timer timer = new Timer("api-callback");
+
 
 
         ;
