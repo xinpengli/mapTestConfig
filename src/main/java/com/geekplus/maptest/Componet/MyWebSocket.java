@@ -134,7 +134,7 @@ long lastTimeFileSize=file.length();
                                 e.printStackTrace();
                             }
                         }
-                    }, 1_000, 200);
+                    }, 0, 200);
 
 
                 }

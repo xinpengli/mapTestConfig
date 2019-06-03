@@ -9,8 +9,10 @@
 <body>
 <script type="text/javascript">
     var websocket = null;
+    var hostname=window.location.hostname;
+
     if('WebSocket' in window ){
-        websocket = new WebSocket("ws://127.0.0.1:61118/websocket");
+        websocket = new WebSocket("ws://"+hostname+":61118/websocket");
     }
     else{
         alert('Not support websocket')

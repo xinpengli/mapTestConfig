@@ -2,6 +2,7 @@ package com.geekplus.maptest.Controller;
 
 
 import com.geekplus.maptest.Common.PropertiesUtils;
+import com.geekplus.maptest.Common.YmlUtils;
 import com.geekplus.maptest.Componet.FileOperation;
 import com.geekplus.maptest.entity.Sysconfig;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class RpcTestControllor {
     @RequestMapping(value = "/modify")
    public Map<String, Object> modifySystmeConfig(@RequestParam("mapGe") String mapg, @RequestParam("mode") String mode, HttpServletResponse response) throws IOException, InterruptedException {
 //    public Map<String, Object> modifySystmeConfig( @RequestBody Sysconfig  sysconfig) throws IOException, InterruptedException {
-       /* mapg=mapg.toLowerCase();
+        mapg=mapg.toLowerCase();
         mode=mode.toUpperCase();
 String sysFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/sysconfig.properties";
 String appliFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/application.properties";
@@ -91,7 +92,7 @@ switch (mode.toUpperCase()){
         default:
             logger.warn("传入值"+mode+"不存在");
 
-}*/
+}
        /* response.setContentType("text/html;charset=utf-8");
 
         response.getWriter().write( "<script>alert('修改成功');</script>");*/
@@ -215,33 +216,26 @@ return map;
 
         /*关闭rms以及测试工具*/
 
-/* fileOperation.executXhshell("stop.sh");
+ fileOperation.executXhshell("stop.sh");
  fileOperation.executXhshell("stop-tools.sh");
 
 
 List<String> list=new ArrayList();
-list.add("/usr/local/geekplus/tomcat-rms//athena/WEB-INF/classes/config/system/");
-list.add("/home/test-tools/athena-test-3.1/resources/config/");*/
+list.add("/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/");
+list.add("/home/test-tools/athena-test-3.1/resources/config/");
+        Map<String,Object> map= new HashMap<>();
 
-     /*   response.setContentType("text/html;charset=utf-8");
         for (String item : list) {
             String result= fileOperation.replacefile(file,item);
             if (result.equals("success")){
-                try {
-                    response.getWriter().write( "<script>alert('上传成功"+item+"');</script>");
-                    response.getWriter().flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    map.put("msg","上传成功");
+
 
             }else {
 
-                try {
-                    response.getWriter().write( "<script>alert('上传失败');</script>");
-                    response.getWriter().flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                    map.put("msg","上传失败");
+
             }
 
 
@@ -249,7 +243,7 @@ list.add("/home/test-tools/athena-test-3.1/resources/config/");*/
 
 
 
-        }*/
+        }
        /* response.setContentType("text/html;charset=utf-8");
         response.getWriter().write( "<script>alert('上传成功"+file+"');</script>");
         response.getWriter().flush();*/
@@ -259,8 +253,8 @@ list.add("/home/test-tools/athena-test-3.1/resources/config/");*/
         return map;*/
 //return "robot";
         //重定向url会变成/rpc/robot,以防刷新时post,get重复提交
-        Map<String,Object> map= new HashMap<>();
-        map.put("msg","上传成功");
+
+
         return map;
 
 
