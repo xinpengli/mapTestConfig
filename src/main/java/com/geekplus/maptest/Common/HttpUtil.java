@@ -45,7 +45,7 @@ public class HttpUtil {
 			obj=JSON.parseObject(conResult);
 			return obj;
 	}
-	public static JSONObject getRequestHeder( )  {
+	public static JSONObject getRequestHeder(String version )  {
 		CloseableHttpClient client =  HttpClients.createDefault();
 		HttpResponse response;
 		String conResult;
@@ -57,7 +57,7 @@ public class HttpUtil {
 		requestHeder.put( "userId","rui");
 		requestHeder.put( "userKey","rui");
 		requestHeder.put( "userKey","rui");
-		requestHeder.put( "version","2.0");
+		requestHeder.put( "version","version");
 
 
 

@@ -22,6 +22,13 @@ public class MapCell {
         Object occupyRobotId;
         Object occupiedShelfCode;
 
+        //3.2
+        Object stationId;
+        Object logicId;
+        Object cellCode;
+
+
+
 
 
 

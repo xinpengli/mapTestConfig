@@ -11,5 +11,5 @@ public class TestJob {
     String server;
     int robotNum=1;
     String mode;
-
+    String version="2.0";
 }

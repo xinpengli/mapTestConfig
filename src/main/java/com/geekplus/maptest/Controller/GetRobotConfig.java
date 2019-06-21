@@ -42,6 +42,7 @@ return "robotconfig";
         int robotNum = testJob.getRobotNum();
         String server = testJob.getServer();
         String mode = testJob.getMode();
+        String version=testJob.getVersion();
 
         JSONObject request = new JSONObject();
         JSONObject requestJson = new JSONObject();
@@ -49,7 +50,7 @@ return "robotconfig";
         JSONObject body = new JSONObject();
         body.put("instruction", "MAP");
         requestJson.put("body", body);
-        requestJson.put("header", HttpUtil.getRequestHeder());
+        requestJson.put("header", HttpUtil.getRequestHeder(version));
         request.put("request", requestJson);
         request.put("id", "clientid");
         request.put("msgType", "com.geekplus.athena.api.msg.req.QueryInstructionRequestMsg");
@@ -59,6 +60,8 @@ return "robotconfig";
 
         /*获取整个whmapcells集合嵌套jsonarry*/
         JSONArray whMapCellsList = response.getJSONObject("response").getJSONObject("body").getJSONObject("map").getJSONArray("whMapCells");
+
+
         /*遍历whmapcells,放入每个新的jsonarry*/
 //    whMapCellsList.getJSONArray(0).toJavaList(MapCell.class);
         List<Map<String, String>> shelfList = new ArrayList<>();
@@ -105,7 +108,7 @@ return "robotconfig";
 
                         shelfList.add(list.get(j).getIndex());
 
-                    } else if (mode.equals("database")) {
+                    } else if (mode.equals("database")||mode.equals("fusion")) {
                         shelfList.add(list.get(j).getLocation());
                     }
                 }

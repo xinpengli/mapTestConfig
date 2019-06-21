@@ -216,6 +216,7 @@
                         <exclude>*.properties</exclude>
                         <exclude>*.yml</exclude>
                         <exclude>*.sh</exclude>
+                        <exclude>templates/</exclude>
                     </excludes>
                     <archive>
                         <manifest>
@@ -291,6 +292,7 @@
                                         <include>*.properties</include>
                                         <include>*.yml</include>
                                         <include>*.sh</include>
+                                        <include>templates/</include>
                                     </includes>
                                 </resource>
                             </resources>

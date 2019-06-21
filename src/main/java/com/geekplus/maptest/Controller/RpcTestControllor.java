@@ -35,7 +35,7 @@ public class RpcTestControllor {
 
 @ResponseBody
     @RequestMapping(value = "/modify")
-   public Map<String, Object> modifySystmeConfig(@RequestParam("mapGe") String mapg, @RequestParam("mode") String mode, HttpServletResponse response) throws IOException, InterruptedException {
+   public Map<String, Object> modifySystmeConfig(@RequestParam("mapGe") String mapg, @RequestParam("mode") String mode,@RequestParam("isqueued") String isqueued) throws IOException, InterruptedException {
 //    public Map<String, Object> modifySystmeConfig( @RequestBody Sysconfig  sysconfig) throws IOException, InterruptedException {
         mapg=mapg.toLowerCase();
         mode=mode.toUpperCase();
@@ -47,7 +47,11 @@ File testTollsFile=new  File("/home/test-tools/athena-test-3.1/resources/applica
 
 
 
-
+    if (isqueued.toUpperCase().equals("TRUE")){
+        propertiesUtils.replacePro(sysFilepath,"path.context.builder","transportQueueableAStarPlanContextBuilder");
+    }else  if(isqueued.toUpperCase().equals("FALSE")){
+        propertiesUtils.replacePro(sysFilepath,"path.context.builder","transportAStarPlanContextBuilder");
+    }
 
 switch (mode.toUpperCase()){
     case  "DATABASE":
