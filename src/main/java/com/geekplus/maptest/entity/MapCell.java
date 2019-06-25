@@ -9,7 +9,7 @@ import java.util.Map;
 @Getter
 @Setter
 
-public class MapCell {
+public  class MapCell {
 //   Map<String,Object> mapCelllist;
 
         Map<String,String> index;
@@ -22,10 +22,6 @@ public class MapCell {
         Object occupyRobotId;
         Object occupiedShelfCode;
 
-        //3.2
-        Object stationId;
-        Object logicId;
-        Object cellCode;
 
 
 

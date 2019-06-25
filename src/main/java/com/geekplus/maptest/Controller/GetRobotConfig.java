@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.geekplus.maptest.Common.Dom4jUtil;
 import com.geekplus.maptest.Common.HttpUtil;
+import com.geekplus.maptest.entity.FloorsMapCell;
+import com.geekplus.maptest.entity.LowMapCell;
 import com.geekplus.maptest.entity.MapCell;
 import com.geekplus.maptest.entity.TestJob;
 import org.slf4j.Logger;
@@ -26,23 +28,20 @@ import java.util.Map;
 @RequestMapping("/robot")
 public class GetRobotConfig {
     private static final Logger logger = LoggerFactory.getLogger(GetRobotConfig.class);
-
-
-
-
-
+   public   List<Map<String, String>> shelfList=new ArrayList<Map<String,String>>();
 
     @RequestMapping("/robotconfig")
-public String robotconfig()   {
-return "robotconfig";
-}
+    public String robotconfig() {
+        return "robotconfig";
+    }
+
     @RequestMapping("/config")
     @ResponseBody
     public String config(@RequestBody TestJob testJob) throws IOException {
         int robotNum = testJob.getRobotNum();
         String server = testJob.getServer();
         String mode = testJob.getMode();
-        String version=testJob.getVersion();
+        String version = testJob.getVersion();
 
         JSONObject request = new JSONObject();
         JSONObject requestJson = new JSONObject();
@@ -56,68 +55,68 @@ return "robotconfig";
         request.put("msgType", "com.geekplus.athena.api.msg.req.QueryInstructionRequestMsg");
         response = HttpUtil.postJsonData("http://" + server + ":8895/", request);
 
-
+//        List<MapCell> list=null;
+      //  List<FloorsMapCell> listHigh=null;
 
         /*获取整个whmapcells集合嵌套jsonarry*/
-        JSONArray whMapCellsList = response.getJSONObject("response").getJSONObject("body").getJSONObject("map").getJSONArray("whMapCells");
 
-
-        /*遍历whmapcells,放入每个新的jsonarry*/
+        if (version.equals("2.0")){
+            JSONArray whMapCellsList = response.getJSONObject("response").getJSONObject("body").getJSONObject("map").getJSONArray("whMapCells");
+            /*遍历whmapcells,放入每个新的jsonarry*/
 //    whMapCellsList.getJSONArray(0).toJavaList(MapCell.class);
-        List<Map<String, String>> shelfList = new ArrayList<>();
-        for (int i = 0; i < whMapCellsList.size(); i++) {
 
-            List<MapCell> list = JSONObject.parseArray(whMapCellsList.getJSONArray(i).toJSONString(), MapCell.class);
-            for (int j = 0; j < list.size(); j++) {
-                // if (mode.equals("XML"))
-                if (list.get(j).getCellType().equals("SHELF_CELL")) {
-                    if (mode.equals("xml")) {
-                        //如果末尾数为0改成5
-                   Map<String,String> index=list.get(j).getIndex()    ;
-                        Map<String,String> index1=new HashMap<>();
-                        System.out.println(index.get("x"));
-                   if (isinteger(index.get("x").toString())){
+            for (int i = 0; i < whMapCellsList.size(); i++) {
+//获取whMapCellsList.getJSONArray(i)又是一个数组;JSONObject.parseArray（array.tostring，mapcell.class）把数组转化成list<mapcell>,因为数组每个元素都是一个MapCell
+                List<LowMapCell>     list = JSONObject.parseArray(whMapCellsList.getJSONArray(i).toJSONString(), LowMapCell.class);
+                //
+                //获取货架老家集合
+                getShelfPlacements(list, mode);
+            }
+        }else if (version.equals("3.2")){
+            JSONArray floorsArray= new JSONArray();
+            floorsArray = response.getJSONObject("response").getJSONObject("body").getJSONObject("map").getJSONArray("floors");
+            if (mode.equals("fusion")){
+                List<FloorsMapCell>  fusion = JSONObject.parseArray(floorsArray.getJSONObject(0).getJSONArray("fusionMap").toJSONString(), FloorsMapCell.class);
+                getShelfPlacements(fusion, mode);
+            }else{
+              JSONArray     whMapCellsList   = floorsArray.getJSONObject(0).getJSONArray("matrixMap");
 
-
-
-                       index1.put("x",index.get("x").toString()+".5");
-
-                   }else{
-
-                       String x=index.get("x").toString().substring(0,index.get("x").length()-1);
-
-                       index1.put("x",x+"5");
-                   }
-                   //y
-                        if (isinteger(index.get("y").toString())){
-
-
-
-                            index1.put("y",index.get("y").toString()+".5");
-
-                        }else{
-
-                            String y=index.get("y").toString().substring(0,index.get("y").length()-1);
-
-                            index1.put("y",y+"5");
-                        }
-
-
-
-                        list.get(j).setIndex(index1);
-
-                        shelfList.add(list.get(j).getIndex());
-
-                    } else if (mode.equals("database")||mode.equals("fusion")) {
-                        shelfList.add(list.get(j).getLocation());
-                    }
+                for (int i = 0; i < whMapCellsList.size(); i++) {
+//获取whMapCellsList.getJSONArray(i)又是一个数组;JSONObject.parseArray（array.tostring，mapcell.class）把数组转化成list<mapcell>,因为数组每个元素都是一个MapCell
+                    List<LowMapCell>     list = JSONObject.parseArray(whMapCellsList.getJSONArray(i).toJSONString(), LowMapCell.class);
+                    //
+                    //获取货架老家集合
+                    getShelfPlacements(list, mode);
                 }
-
 
             }
 
-        }
 
+        }
+       /* switch (version) {
+            case "2.0":
+
+
+                break;
+            case "3.2" :
+
+                if (mode.equals("database") || mode.equals("xml")){
+                    List<MapCell>     list   = JSONObject.parseArray(floorsArray.getJSONObject(0).getJSONArray("fusionMap").toJSONString(), MapCell.class);
+                    //
+                    //获取货架老家集合
+                    getShelfPlacements(list, mode);
+                }else{
+                    List<FloorsMapCell>  listHigh = JSONObject.parseArray(floorsArray.getJSONObject(0).getJSONArray("fusionMap").toJSONString(), FloorsMapCell.class);
+
+                }
+
+
+
+//floorsArray.getJSONObject(0)数组元素的第一个元素，
+
+//                 shelfList = getShelfPlacements(listHigh, mode);
+                break;
+        }*/
 
 
         if (robotNum <= shelfList.size()) {
@@ -134,13 +133,67 @@ return "robotconfig";
 
     }
 
-public boolean isinteger(String str){
-        if (str.split("\\.").length==1){
+    /*
+    遍历获取查找货架老家单元格，
+    * */
+//    public <T extends MapCell> List<Map<String, String>> getShelfPlacements(List<T> list, String mode) {
+    public <T extends MapCell> List<Map<String, String>> getShelfPlacements(List<T> list, String mode) {
+//        List<Map<String, String>> shelfList = new ArrayList<>();
+        for (int j = 0; j < list.size(); j++) {
+            // if (mode.equals("XML"))
+            if (list.get(j).getCellType().equals("SHELF_CELL")) {
+                if (mode.equals("xml")) {
+                    //如果末尾数为0改成5
+                    Map<String, String> index = list.get(j).getIndex();
+                    Map<String, String> index1 = new HashMap<>();
+                    System.out.println(index.get("x"));
+                    if (isinteger(index.get("x").toString())) {
 
-        return true;
-         }else {
-        return false;
+
+                        index1.put("x", index.get("x").toString() + ".5");
+
+                    } else {
+
+                        String x = index.get("x").toString().substring(0, index.get("x").length() - 1);
+
+                        index1.put("x", x + "5");
+                    }
+                    //y
+                    if (isinteger(index.get("y").toString())) {
+
+
+                        index1.put("y", index.get("y").toString() + ".5");
+
+                    } else {
+
+                        String y = index.get("y").toString().substring(0, index.get("y").length() - 1);
+
+                        index1.put("y", y + "5");
+                    }
+
+
+                    list.get(j).setIndex(index1);
+
+                    shelfList.add(list.get(j).getIndex()) ;
+
+                } else if (mode.equals("database") || mode.equals("fusion")) {
+                    shelfList.add(list.get(j).getLocation());
+                }
+            }
+
+
         }
-}
+
+       return shelfList;
+    }
+
+    public boolean isinteger(String str) {
+        if (str.split("\\.").length == 1) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

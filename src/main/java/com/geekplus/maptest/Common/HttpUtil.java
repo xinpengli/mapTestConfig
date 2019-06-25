@@ -17,7 +17,7 @@ import java.io.IOException;
 public class HttpUtil {
 	/**
 	 * post json格式的数据
-	 * @param client
+	 * @param
 	 * @param URL
 	 * @param request
 	 * @return
@@ -57,7 +57,15 @@ public class HttpUtil {
 		requestHeder.put( "userId","rui");
 		requestHeder.put( "userKey","rui");
 		requestHeder.put( "userKey","rui");
-		requestHeder.put( "version","version");
+		switch (version){
+			case "2.0":
+
+			case "3.2":
+
+				requestHeder.put( "version","3.1.0");
+
+		}
+
 
 
 
