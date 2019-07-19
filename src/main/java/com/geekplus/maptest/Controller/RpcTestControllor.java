@@ -7,6 +7,7 @@ import com.geekplus.maptest.Componet.FileOperation;
 import com.geekplus.maptest.entity.Sysconfig;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,8 @@ public class RpcTestControllor {
     public FileOperation fileOperation;
     @Autowired
     public PropertiesUtils propertiesUtils;
+    @Autowired
+    Environment environment;
 
 @ResponseBody
     @RequestMapping(value = "/modify")
@@ -41,7 +44,8 @@ public class RpcTestControllor {
         mode=mode.toUpperCase();
 String sysFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/sysconfig.properties";
 String appliFilepath="/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/application.properties";
-File testTollsFile=new  File("/home/test-tools/athena-test-3.1/resources/application.yml");
+String toolsfilePath=environment.getProperty("maptest.path");
+File testTollsFile=new  File(toolsfilePath);
 
 
 
@@ -137,14 +141,35 @@ return map;
     }
 
     @RequestMapping(value = "/startservice", method = RequestMethod.GET)
-    public String startService(@RequestParam("way") String way, HttpServletResponse response) throws IOException, InterruptedException {
+    public String startService(@RequestParam("way") String way,@RequestParam("action") String action, HttpServletResponse response) throws IOException, InterruptedException {
 
         if (way.equals("athena")) {
-            fileOperation.executXhshell("start.sh");
+
+            switch (action) {
+                case "stop":
+
+                    fileOperation.executXhshell("stop.sh");
+                    break;
+                case "restart":
+                    fileOperation.executXhshell("start.sh");
+                    break;
+            }
 
         } else if (way.equals("athenatest")) {
-            fileOperation.executXhshell("start-tools.sh");
+            switch (action) {
+                case "stop":
+
+                    fileOperation.executXhshell("stop-tools.sh");
+                    break;
+                case "restart":
+                    fileOperation.executXhshell("start-tools.sh");
+                    break;
+            }
+
         }
+
+
+
 
 
         return "redirect:/rpc/" + way;

@@ -35,5 +35,7 @@
     text-align: center;
     color: #fff;
 }
-
- 
+/*当校验出错时的lable样式为红色*/
+label.error{
+    color: red;
+}

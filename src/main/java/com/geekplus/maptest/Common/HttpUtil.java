@@ -59,11 +59,12 @@ public class HttpUtil {
 		requestHeder.put( "userKey","rui");
 		switch (version){
 			case "2.0":
-
+				requestHeder.put( "version","2.0");
+				break;
 			case "3.2":
 
 				requestHeder.put( "version","3.1.0");
-
+				break;
 		}
 
 

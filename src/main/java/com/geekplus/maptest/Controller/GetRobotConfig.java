@@ -1,5 +1,6 @@
 package com.geekplus.maptest.Controller;
 
+import cn.hutool.core.io.file.FileReader;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -9,14 +10,14 @@ import com.geekplus.maptest.entity.FloorsMapCell;
 import com.geekplus.maptest.entity.LowMapCell;
 import com.geekplus.maptest.entity.MapCell;
 import com.geekplus.maptest.entity.TestJob;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,10 +35,15 @@ public class GetRobotConfig {
     public String robotconfig() {
         return "robotconfig";
     }
+    @RequestMapping("/Tomapmodify")
+    public String Tomapmodify() {
+        return "mapModify";
+    }
 
     @RequestMapping("/config")
     @ResponseBody
-    public String config(@RequestBody TestJob testJob) throws IOException {
+    public String config(@RequestBody TestJob testJob) throws IOException, DocumentException {
+        Document document=Dom4jUtil.readXML("/config/config.xml");
         int robotNum = testJob.getRobotNum();
         String server = testJob.getServer();
         String mode = testJob.getMode();
@@ -120,9 +126,12 @@ public class GetRobotConfig {
 
 
         if (robotNum <= shelfList.size()) {
-            String str = Dom4jUtil.addRobot(shelfList, robotNum);
+            Dom4jUtil.addRobot(document, shelfList, robotNum);
+            FileReader fileReader = null;
+            fileReader = new FileReader(Dom4jUtil.class.getResource("/config/config.xml").getFile());
 
-            return str;
+
+            return fileReader.readString();
         } else {
             return "输入数量过大！";
         }

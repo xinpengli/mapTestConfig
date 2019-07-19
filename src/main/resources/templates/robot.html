@@ -159,20 +159,43 @@ console.log(result.msg);
     </form>
     <br /> <br />
     <label>3:重启系统 <br /> <br /> </label>
-    <form id="formdata" action="/rpc/startservice" method="get">
+      <!---->get方法直接取得就是下拉列表的value值
+    <div id="formdata_action"><form id="formdata" action="/rpc/startservice" method="get">
         <br/>
-        <select name="way" id="serverid">
+        <select name="way" v-mode="way" id="serverid">
             <option value="athena" selected>RMS系统</option>
             <option value="athenatest">测试工具(初始化货架)</option>
         </select>
+        </select>
+         <select name="action" v-mode="action" class="language-code form-control">
+        <option value="stop" selected>停止</option>
+        <option value="restart">重启</option>
+
+
+    </select>
         <button id="sbmit" type="submit">重启系统</button>
 
     </form>
+    </div>
     <br />
    <!-- <textarea  id="message"  style=" width: 1358px; height: 500px;"> </textarea>-->
 </div>
     <div th:replace="public :: #botom_id">123</div>
 </div>
+<script type="application/javascript">
+    var formdata;
+    var isseen;
+    formdata = new Vue({
+        el: '#formdata_action',
+        data: {
+            way: '',
+            action: '',
 
+        },
+
+    });
+
+    //  alert(formdata.$data.toString())
+</script>
 </body>
 </html>

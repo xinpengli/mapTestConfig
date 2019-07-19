@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.geekplus</groupId>
-    <artifactId>maptest</artifactId>
+    <artifactId>maptestConfig</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>maptest</name>
+    <name>maptestConfig</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -108,7 +108,7 @@
             <artifactId>dom4j</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <exclusions>
@@ -118,7 +118,7 @@
                 </exclusion>
             </exclusions>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
         <!--第三方工具-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -133,7 +133,8 @@
     </dependencies>
 
     <build>
-        <finalName>maptest</finalName>
+        <!--finalName最终打包的名字-->
+        <finalName>maptestConfig</finalName>
         <plugins>
             <!-- mybatis-generator mybatis-->
             <!--<plugin>

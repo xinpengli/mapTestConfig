@@ -1,0 +1,191 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="public :: #head_id">
+    <title>athena测试(picking)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+
+
+
+</head>
+
+
+<body>
+<script>
+/*$.validator.setDefaults({
+submitHandler: function() {
+
+change();
+}
+});*/
+$(document).ready(function() {
+$('#uploadForm1').validate({
+    rules:{
+        QueueSize:{
+            required:true,
+            maxlength:10,
+            min:1,
+            digits:true
+        }
+    },
+    messages:{
+        QueueSize:{
+            required:"必填",
+            maxlength:"最大为10位",
+            min:"必须输入正整数",
+            digits:"必须输入正整数",
+        }
+    },
+    // 如果验证通过就触发submitHandler里的ajax方法
+    submitHandler: function() {
+        change();
+    }
+});
+
+});
+</script>
+<script type="text/javascript">
+
+
+
+
+    /*显示3秒隐藏setTimeout("document.getElementById('div1').style.display='none'",3000);*/
+
+   /* window.href.location="/rpc/robot";*/
+    function upload() {
+/*ajax在不刷新页面情况跟后台交互，前台可提示返回信息是json对象*/
+
+        $.ajax({
+            url: "http://"+location.hostname+":61118/map/upfile",
+            type : "post",
+            cache: false,
+           data:  new FormData($('#uploadForm')[0]),
+
+            processData: false,
+            //不用指定类型 form 得entype已经指定
+            contentType: false,
+
+            success: function( result ) {
+                console.log(result);
+
+
+
+console.log(result.msg);
+             /* document.getElementById("div1").value=*/
+
+
+                alert(result.msg);
+
+             /*   var responseText = document.getElementById("responseText");
+                responseText.value=result;*/
+
+            }
+        });
+    }
+
+
+
+    function change(){
+
+
+        // alert(JSON.stringify(json));
+        /*  相当于 data:   {mapGe:"xml",mode:"XML"},的效果，此形式可以作为application/x-www-form-urlencoded',也可做为json格式发送
+   参数用 contentType: 'application/x-www-form-urlencoded',后台用Requestparam获取
+    参数用 application/json;charset=utf-8',: ,后台用@requestbody获取json数据
+          $('#data').serialize()相当于key=value1&key2=vlue2，
+
+         */
+
+        var json1 = $('#uploadForm1').serialize();
+
+
+        $.ajax({
+            url: "http://" + location.hostname + ":61118/map/QueueSize",
+            type: "post",
+            cache: false,
+            //
+            data: json1,
+            // processData: false,
+            //用于对参数进行参数化处理，默认true
+            // processData: true,
+            //不用指定类型 form 得entype已经指定
+            // contentType: 'application/json;charset=utf-8',
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (result) {
+                console.log(result);
+                //   console.log(result.msg);
+                /* document.getElementById("div1").value=*/
+
+
+                //  alert(result.msg);
+               
+                var responseText = document.getElementById("responseText");
+                responseText.value = result.mapText.toString();
+
+            }
+        });
+
+
+    }
+
+
+</script>
+<div class="divBox">
+    <div th:replace="public :: #left_id"></div>
+
+<div class="right">
+    <!-- <div id="div1" th:text="${msg}"th:if="${not #strings.isEmpty(msg)}"     style="color:green; display: block; margin-left: 900px ;background:#9FB4D9;"></div>-->
+    <br />
+    <label>1:上传要修改map文件 <br /> <br /> </label>
+
+    <div><form id="uploadForm"    method="post" style="float: left;  text-align: left" enctype="multipart/form-data">
+
+    <!--
+        //后端controller通过@requestParam(空间name file)
+    -->
+    <input id="file" type="file" name="file"/>
+
+    <input type="button" value="上传" onclick="upload()" />
+
+</form>
+        <br>
+        <br />
+        <label for="uploadForm1">2:修改map <br /> <br /> </label>
+        <form id="uploadForm1"    method="post" style="float: left;  text-align: left" >
+
+            <!--
+                //后端controller通过@requestParam(空间name file)
+            -->
+            单点工位排队数量：<input type="text"  name="QueueSize"  id="queueSize1">
+
+            <!--<input type="button" value="上传" onclick="upload()"/>-->
+            <input type="submit" value="提交更改"  />
+
+        </form>
+    </div>
+    <br>
+
+    <br>
+    <div>
+        <label style="left: auto">修改后的结果：</label><br/>
+        <textarea id="responseText" style="width: 1000px; height: 200px;"></textarea><br/>
+    </div>
+
+</div>
+    <div th:replace="public :: #botom_id">123</div>
+
+    <div id="testdivshow">这是信息</div>
+
+    $('#testdivshow').css({
+    　　position: "absolute",
+    　　top: 123,
+    　　left: 123,
+    　　width: 123,
+    　　height: 123
+    }).show(300).delay(3000).hide(300);
+</div>
+</body>
+
+</html>

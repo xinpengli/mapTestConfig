@@ -6,9 +6,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" th:href="@{/public.css}"/>
 
-    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}">
-
-    </script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/vue.js}"></script>
+   <!-- <script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.js}"></script>-->
+    <script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+   <!-- <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>-->
 
 </head>
 
@@ -23,11 +26,13 @@
             <br>
             <li style="width: 100px"><a th:href="@{/robot/robotconfig}">机器人配置</a></li>
             <br>
-            <li style="width: 100px"><a href="http://172.16.3.19:61001/athenatest/">任务下发</a></li>
+            <li style="width: 100px"><a href="http://172.16.3.19:62001/athenatest/">任务下发</a></li>
             <br>
             <li style="width: 100px"><a th:href="@{/rpc/athena}">athena日志</a></li>
             <br>
             <li style="width: 100px"><a th:href="@{/rpc/athenatest}">Athenatest日志</a></li>
+            <br>
+            <li style="width: 100px"><a th:href="@{/robot/Tomapmodify}">地图工位修改</a></li>
         </ul>
 
     </div>

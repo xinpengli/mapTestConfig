@@ -2,6 +2,7 @@ package com.geekplus.maptest.Componet;
 
 import com.geekplus.maptest.Common.PropertiesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +12,8 @@ public class FileOperation {
 
 @Autowired
   public PropertiesUtils propertiesUtil;
+@Autowired
+    Environment environment;
 
     public String replacefile(MultipartFile file,String filePath){
 
@@ -22,6 +25,7 @@ public class FileOperation {
                  * d:/files大家是否能实现呢？ 等等;
                  * 这里只是简单一个例子,请自行参考，融入到实际中可能需要大家自己做一些思考，比如： 1、文件路径； 2、文件名；
                  * 3、文件格式; 4、文件大小的限制;*/
+                //新建文件且指定路径
                 File file1 = new File(filePath+file.getOriginalFilename());
 
                 //BufferedOutputStream 写入file.getOriginalFilename()文件里，写文件
