@@ -6,12 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" src="js/jquery-3.3.1.min.js">
     </script>
+    <script type="text/javascript" th:src="@{/js/vue.js}"></script>
 
 </head>
 <!--
 <body style="background-image:url(img/bg.jpg);background-repeat:no-repeat">
 -->
 <body>
+<script type="text/javascript" th:src="@{/js/vue.js}"></script>
+
 <script type="text/javascript">
 
     function validate_required(field, alerttxt) {
@@ -20,10 +23,6 @@
                 alert(alerttxt);
                 return false
             }
-
-
-
-
             else {
                 return true
             }
@@ -62,7 +61,7 @@
 
         
     }
-    function testSinglePointStations() {
+    function testSinglePointStations1() {
         var robotNum = parseInt(document.getElementById("robotNum").value);
         var server = String(document.getElementById("server").value);
       /*  var selecet = document.getElementById("mode");
@@ -78,14 +77,20 @@
                 var mode=radio[i].value;
                 break;
             }}
+            alert(formdata.$data);
+
 
         $.ajax({
             url: "http://" + location.hostname + ":61118/robot/config",
             type: "post",
-            data: JSON.stringify({robotNum: robotNum, server: server, mode: mode,version:version}),
+           // data: JSON.stringify({robotNum: robotNum, server: server, mode: mode,version:version}),
+          //  data: JSON.stringify(formdata.data.toString()),
+            //formdata.data vue对象的data属性本身就是json字符串
+            data: data,
             contentType: "application/json;charset=UTF-8",
             success: function (result) {
-                alert("发送成功，点击获取配置");
+               // alert("发送成功，点击获取配置");
+
                 var responseText = document.getElementById("responseText");
                 responseText.value = result;
             }
@@ -93,37 +98,39 @@
     }
 
 
+
 </script>
 <div class="divBox">
     <div th:replace="public :: #left_id"></div>
     <div class="right">
-        <div>
+        <div id="form">
             <br>
             <form id="uploadForm" enctype="multipart/form-data"
                   onsubmit=" return validate_form(this) ? testSinglePointStations():false">
-                机器人配置数量：<input type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'') "
-                               onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " name="robotNum"
-                               id="robotNum"/>
-                RMS服务器IP：<input type="text" name="server" id="server"/>
+                机器人配置数量：<input type="text" v-model="robotNum" onkeyup="this.value=this.value.replace(/[^\d]/g,'') "
+                                                     onafterpaste="this.value=this.value.replace(/[^\d]/g,'') " name="robotNum"
+                                                     id="robotNum"/>
+                RMS服务器IP：<input v-model="server" type="text" name="server" id="server"/>
 
-                rms版本： <select id="version" class="language-code form-control" onchange="fusion_div()">
+                    rms版本： <div id="div_version"><select id="version" v-on:change="version_change" v-model="version" class="language-code form-control">
                 <option value="2.0" selected>3.2以下</option>
                 <option value="3.2">3.2以上</option>
             </select>
+            </div>
 
                <!-- 地图类型： <select id="mode" class="language-code form-control">
                 <option value="xml" selected>XML</option>
                 <option value="database">DataBase</option>
                 <div id="fusion" style="display: none"> <option value="fusion">FUSION</option></div>-->
-               <div id="xml"><input type="radio" name="mode" value="xml" checked="checked"/>XML</div>
+               <div id="xml"><input type="radio" v-model="mode" name="mode" value="xml" checked="checked"/>XML</div>
                 <input type="radio" name="mode" value="database"/>DataBase
-                <div id="fusion1" style="display: none"> <input type="radio" name="mode" value="fusion"/>FUSION </div>
+                <div id="isseen" v-if="seen" ><input type="radio" name="mode" value="fusion" >FUSION</input></div>
 
 
             </select>
 
 
-                <input type="submit" value="发送"/>
+                <input type="button" value="发送" v-on:click="testSinglePointStations"/>
             </form>
         </div>
         <br>
@@ -135,6 +142,63 @@
     <div th:replace="public :: #botom_id">123</div>
 </div>
 
+<script type="application/javascript">
+    var formdata;
+    var isseen;
+    isseen = new Vue({
+        el: '#isseen',
+        data: {
+            //selected: '',
 
+            seen: false
+
+        }
+
+    });
+        formdata = new Vue({
+        el: '#form',
+        data: {
+            //selected: '',
+
+           // seen: '',
+    robotNum: '', server: '', mode: 'xml',version:'2.0'
+        },
+// 在 `methods` 对象中定义方法
+        methods: {
+            version_change: function (event) {
+// `this` 在方法里指向当前 Vue 实例
+
+
+                if (this.version == "3.2") {
+// $("#uploadForm").getElementById("fusion1").style.display="block";
+                    isseen.data.seen=true;
+
+                   // document.getElementById("fusion1").style.display = "block";
+                } else {
+                    isseen.data.seen=false;
+                  //  document.getElementById("fusion1").style.display = "none";
+                    //document.getElementsByName("xml").item(0).checked = "true";
+
+                }
+
+// `event` 是原生 DOM 事件，当事件发生时（这里指的onchange)，输出该控件的tagname,这里是select,target表示当前select控件,它的属性都可以调用
+                if (event) {
+                    alert(event.target.tagName)
+                    //输出选中的下标
+                    // alert(event.target.selectedIndex)
+                    //输出选中的下拉框value
+                    alert(event.target.value)
+                }
+            },
+    testSinglePointStations:function(){
+
+        testSinglePointStations1();
+    }
+
+        }
+    });
+
+  //  alert(formdata.$data.toString())
+</script>
 </body>
 </html>
