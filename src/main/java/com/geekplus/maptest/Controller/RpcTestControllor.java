@@ -251,7 +251,7 @@ return map;
 
 List<String> list=new ArrayList();
 list.add("/usr/local/geekplus/tomcat-rms/webapps/athena/WEB-INF/classes/config/system/");
-list.add("/home/test-tools/athena-test-3.1/resources/config/");
+list.add("/home/test-tools/maptest/resources/config/");
         Map<String,Object> map= new HashMap<>();
 
         for (String item : list) {

@@ -37,12 +37,13 @@ public class GetRobotConfig {
     }
     @RequestMapping("/Tomapmodify")
     public String Tomapmodify() {
+
         return "mapModify";
     }
 
     @RequestMapping("/config")
     @ResponseBody
-    public String config(@RequestBody TestJob testJob) throws IOException, DocumentException {
+    public Map<String, String> config(@RequestBody TestJob testJob) throws IOException, DocumentException {
         Document document=Dom4jUtil.readXML("/config/config.xml");
         int robotNum = testJob.getRobotNum();
         String server = testJob.getServer();
@@ -124,16 +125,25 @@ public class GetRobotConfig {
                 break;
         }*/
 
-
+        Map<String,String> map =new HashMap<>();
         if (robotNum <= shelfList.size()) {
             Dom4jUtil.addRobot(document, shelfList, robotNum);
             FileReader fileReader = null;
             fileReader = new FileReader(Dom4jUtil.class.getResource("/config/config.xml").getFile());
 
 
-            return fileReader.readString();
+            map.put("code","0");
+            map.put("msg","成功");
+            map.put("data",fileReader.readString());
+
+
+            return map;
         } else {
-            return "输入数量过大！";
+            map.put("code","100");
+            map.put("msg","失败");
+            map.put("data","输入数量过大");
+            return map;
+
         }
 
 

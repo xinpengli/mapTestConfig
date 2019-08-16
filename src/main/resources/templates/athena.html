@@ -12,7 +12,8 @@
     var hostname=window.location.hostname;
 
     if('WebSocket' in window ){
-        websocket = new WebSocket("ws://"+hostname+":61118/websocket");
+        // websocket = new WebSocket("ws://"+hostname+":61118/websocket");
+        websocket = new WebSocket("ws://172.16.42.27:8890/");
     }
     else{
         alert('Not support websocket')
@@ -86,7 +87,15 @@
 
         /*   var message = String(document.getElementById('text').value);
           var servername= $("#serverid").options.item($("#serverid").options.selectedIndex).value;*/
-        websocket.send("athena");
+        // websocket.send("athena");
+
+
+       /* 定义json对象，发送时，把json对象转换为字符串发送，后端通过channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame frame) 接收
+       var json={"id":"GEEK","msgType":"UpdateRequestMsg","request":{"header":{"requestId":"c56053b5-7bc3-a01a-aaae-ca35c878c3a4","clientCode":"GEEK","warehouseCode":"GEEK"},"body":{"robotIds":[],"shelfCodes":[],"floorIds":["1"],"cellCodes":[]}}};
+        websocket.send(JSON.stringify(json));
+            接收到的json对象属性可以用json.id获取
+        */
+
 
 
     }
