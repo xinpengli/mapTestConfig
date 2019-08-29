@@ -131,7 +131,7 @@ public class GetRobotConfig {
             FileReader fileReader = null;
             fileReader = new FileReader(Dom4jUtil.class.getResource("/config/config.xml").getFile());
 
-
+            shelfList.clear();
             map.put("code","0");
             map.put("msg","成功");
             map.put("data",fileReader.readString());

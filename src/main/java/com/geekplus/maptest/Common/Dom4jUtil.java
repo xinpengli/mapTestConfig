@@ -44,14 +44,17 @@ public  static String filepath;
 
 
         output = null;
+        //createPrettyPrint,美化xml格式，setTrimText改为false,因为默认为true可能删除多余回车空格，导致结尾标签没有回车
         format = OutputFormat.createPrettyPrint();
         format.setEncoding("UTF-8");
+        format.setTrimText(false);
+
 //        format.setEncoding("UTF-8");
         try {
 
             output = new XMLWriter(new FileOutputStream(Dom4jUtil.class.getResource(filepath).getFile(), false), format); //这里的path是修改后需要保存的路径，建议和未修改前位置一样
             output.write(document);
-            output.flush();
+            //output.flush();
             output.close();
 
 
