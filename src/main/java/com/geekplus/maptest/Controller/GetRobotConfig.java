@@ -6,19 +6,19 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.geekplus.maptest.Common.Dom4jUtil;
 import com.geekplus.maptest.Common.HttpUtil;
-import com.geekplus.maptest.entity.FloorsMapCell;
-import com.geekplus.maptest.entity.LowMapCell;
-import com.geekplus.maptest.entity.MapCell;
-import com.geekplus.maptest.entity.TestJob;
+import com.geekplus.maptest.Common.YmlUtils;
+import com.geekplus.maptest.entity.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +30,8 @@ import java.util.Map;
 public class GetRobotConfig {
     private static final Logger logger = LoggerFactory.getLogger(GetRobotConfig.class);
    public   List<Map<String, String>> shelfList=new ArrayList<Map<String,String>>();
+    @Autowired
+    SystemAndRobotConfig systemAndRobotConfig;
 
     @RequestMapping("/robotconfig")
     public String robotconfig() {
@@ -44,6 +46,21 @@ public class GetRobotConfig {
     @RequestMapping("/config")
     @ResponseBody
     public Map<String, String> config(@RequestBody TestJob testJob) throws IOException, DocumentException {
+
+
+        /*systemAndRobotConfig.setDefault("P");
+        YmlUtils.addIntoYml(new File(YmlUtils.class.getResource("/config/robotConfig.yaml").getFile()),"server",systemAndRobotConfig.getServer());
+        YmlUtils.addIntoYml(new File(YmlUtils.class.getResource("/config/robotConfig.yaml").getFile()),"spring",systemAndRobotConfig.getSpring());
+        YmlUtils.addIntoYml(new File(YmlUtils.class.getResource("/config/robotConfig.yaml").getFile()),"simulation",systemAndRobotConfig.getSimulation());*/
+
+
+
+
+
+
+
+
+
         Document document=Dom4jUtil.readXML("/config/config.xml");
         int robotNum = testJob.getRobotNum();
         String server = testJob.getServer();
@@ -125,9 +142,10 @@ public class GetRobotConfig {
                 break;
         }*/
 
+
         Map<String,String> map =new HashMap<>();
-        if (robotNum <= shelfList.size()) {
             Dom4jUtil.addRobot(document, shelfList, robotNum);
+            if (robotNum <= shelfList.size()) {
             FileReader fileReader = null;
             fileReader = new FileReader(Dom4jUtil.class.getResource("/config/config.xml").getFile());
 

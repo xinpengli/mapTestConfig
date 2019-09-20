@@ -1,6 +1,10 @@
-package com.geekplus.maptest.Componet;
+package com.geekplus.maptest.Componet.API.WebSocket;
 
-import cn.hutool.core.io.file.FileReader;
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import lombok.Getter;
+import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -11,15 +15,57 @@ import java.io.RandomAccessFile;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@ServerEndpoint(value="/websocket")
+
+@ClientEndpoint
 @Component
-public class MyWebSocket {
+@Getter
+@Setter
+public class WebSocketClient {
+
+ private  static Logger logger= LoggerFactory.getLogger(WebSocketClient.class);
+ public static Map<String,String> jsonMap=new  HashMap<>();
+// public  map
+    @OnOpen
+    public void onOpen(Session session) {
+        logger.info("WebSocketClient connect success");
+    }
+
+    @OnMessage
+    public void onMessage(String message) {
+       logger.info("receive success: {}",message);
+        this.addInfo(message);
+
+    }
+
+    @OnClose
+    public void onClose() {
+        logger.info("connection closed");
+
+    }
+   /* @OnError
+    public void onError() {
+
+        logger.info("something erro occur");
+    }*/
+
+
+    public static  void addInfo(String message){
+        jsonMap.put("jsonMap",message);
+      /*  Map<String, String> map = new HashMap<>();
+
+        this.setJsonMap(new HashMap<>(){"jsonMap"，message});*/
+    }
+
+
+
+
+
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
-    Timer timer = new Timer("api-callback");
+   /* Timer timer = new Timer("api-callback");
     private static int onlineCount = 0;
 
     //concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<MyWebSocket> webSocketSet = new CopyOnWriteArraySet<MyWebSocket>();
+    private static CopyOnWriteArraySet<WebSocketClient> webSocketSet = new CopyOnWriteArraySet<WebSocketClient>();
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
@@ -32,8 +78,8 @@ public class MyWebSocket {
    File file;
 //    File file= new File("C:\\var\\log\\geekplus\\test\\athenatest\\athenatest.log");
 
-    /**
-     * 连接建立成功调用的方法*/
+    *//**
+     * 连接建立成功调用的方法*//*
     @OnOpen
     public void onOpen(Session session) {
 
@@ -45,9 +91,9 @@ public class MyWebSocket {
 
     }
 
-    /**
+    *//**
      * 连接关闭调用的方法
-     */
+     *//*
     @OnClose
     public void onClose() throws IOException {
         sessions.remove(this.session);
@@ -58,10 +104,10 @@ public class MyWebSocket {
 
     }
 
-    /**
+    *//**
      * 收到客户端消息后调用的方法
      *
-     * @param message 客户端发送过来的消息*/
+     * @param message 客户端发送过来的消息*//*
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
@@ -75,7 +121,7 @@ public class MyWebSocket {
         ;
         try {
             sendMessage("服务器消息：连接成功");
-            for (MyWebSocket item : webSocketSet) {
+            for (WebSocketClient item : webSocketSet) {
                 if(this.session.isOpen()){
 
                     if (message.equals("athena")){
@@ -122,8 +168,8 @@ long lastTimeFileSize=file.length();
                                     lastTimeFileSize = 0;
                                 }
 
-                               /* FileReader fileReader = null;
-                                fileReader = new FileReader(file);*/
+                               *//* FileReader fileReader = null;
+                                fileReader = new FileReader(file);*//*
 
 //                                String readStr=  fileReader.readString();
 
@@ -172,11 +218,11 @@ long lastTimeFileSize=file.length();
      }
 
 
-     /*
+     *//*
       * 群发自定义消息
-      * */
+      * *//*
     public static void sendInfo(String message) throws IOException {
-        for (MyWebSocket item : webSocketSet) {
+        for (WebSocketClient item : webSocketSet) {
             try {
                 item.sendMessage(message);
             } catch (IOException e) {
@@ -190,11 +236,11 @@ long lastTimeFileSize=file.length();
     }
 
     public static synchronized void addOnlineCount() {
-        MyWebSocket.onlineCount++;
+        WebSocketClient.onlineCount++;
     }
 
     public static synchronized void subOnlineCount() {
-        MyWebSocket.onlineCount--;
-    }
+        WebSocketClient.onlineCount--;
+    }*/
 }
 
