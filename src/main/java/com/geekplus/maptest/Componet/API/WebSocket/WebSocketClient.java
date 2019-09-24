@@ -1,5 +1,8 @@
 package com.geekplus.maptest.Componet.API.WebSocket;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.geekplus.maptest.Common.JSONUtil;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 
@@ -23,7 +27,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocketClient {
 
  private  static Logger logger= LoggerFactory.getLogger(WebSocketClient.class);
- public static Map<String,String> jsonMap=new  HashMap<>();
+ public static Map<String,JSONObject> jsonMap= new ConcurrentHashMap();
+
 // public  map
     @OnOpen
     public void onOpen(Session session) {
@@ -50,7 +55,10 @@ public class WebSocketClient {
 
 
     public static  void addInfo(String message){
-        jsonMap.put("jsonMap",message);
+        JSONObject jsonObject=  JSON.parseObject(message, JSONObject.class);
+        System.out.println(JSONUtil.jsonToBean(message,JSONObject.class).getJSONObject("response").getJSONObject("header").getString("responseId").getClass());
+        jsonMap.put(JSONUtil.jsonToBean(message,JSONObject.class).getJSONObject("response").getJSONObject("header").getString("responseId"),jsonObject);
+//        jsonMap.put(JSONUtil.jsonToBean(message,JSONObject.class).getJSONObject(""),);
       /*  Map<String, String> map = new HashMap<>();
 
         this.setJsonMap(new HashMap<>(){"jsonMap"，message});*/

@@ -14,7 +14,7 @@ import java.net.URI;
 @Component
 public   class WebSocketClientStart {
 private  static Logger logger= LoggerFactory.getLogger(WebSocketClientStart.class);
-    private static String uri = "ws://172.16.49.166:8890";
+    private static String uri = "ws://172.16.42.93:8890";
     public static Session session;
 static{
     WebSocketContainer container = null;
