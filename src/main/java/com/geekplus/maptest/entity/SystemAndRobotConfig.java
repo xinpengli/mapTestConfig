@@ -12,7 +12,9 @@ import java.util.Map;
 @Getter
 @Setter
 public class SystemAndRobotConfig {
-     public Map<String,Integer> server;
+    public  List<RobotLocation> robots;
+
+    /* public Map<String,Integer> server;
      public Map<String,Map<String,String>> spring=new HashMap<>();
     public Map<String,Object> simulation=new HashMap<>();
 
@@ -37,5 +39,5 @@ public class SystemAndRobotConfig {
 
 
 
-    }
+    }*/
 }

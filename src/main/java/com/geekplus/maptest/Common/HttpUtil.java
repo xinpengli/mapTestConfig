@@ -25,10 +25,10 @@ public class HttpUtil {
 	 * @throws IOException
 	 */
 
-	public static JSONObject postJsonData(String URL,JSONObject request) throws ClientProtocolException, IOException{
+	public static JSONObject postJsonData(String URL,JSONObject request) throws ClientProtocolException{
 		CloseableHttpClient client =  HttpClients.createDefault();
 		 HttpResponse response;
-	     String conResult;
+	     String conResult=null;
 	     JSONObject obj;
 	     StringEntity entity = new StringEntity(request.toString(),"utf-8");
 			entity.setContentEncoding("UTF-8");    
@@ -37,11 +37,16 @@ public class HttpUtil {
 			HttpPost httpPost = new HttpPost(URL);
 			httpPost.setEntity(entity);
 			//httpPost.setHeader("cookie", cookie);
+		try {
 			response = client.execute(httpPost);
-			//System.out.println(response.getStatusLine());
-			//resopnse.getEntity();
 			conResult = EntityUtils.toString(response
-                .getEntity());
+					.getEntity());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//System.out.println(response.getStatusLine());
+			//resopnse.getEntity();
+
 			obj=JSON.parseObject(conResult);
 			return obj;
 	}
