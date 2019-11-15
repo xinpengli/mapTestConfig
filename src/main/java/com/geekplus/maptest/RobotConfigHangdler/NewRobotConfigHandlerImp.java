@@ -1,9 +1,8 @@
-package com.geekplus.maptest.map;
+package com.geekplus.maptest.RobotConfigHangdler;
 
 import cn.hutool.core.io.file.FileReader;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.geekplus.maptest.Common.Dom4jUtil;
 import com.geekplus.maptest.Common.HttpUtil;
 import com.geekplus.maptest.Common.YmlUtils;
 import com.geekplus.maptest.Enum.RobotVersion;
@@ -13,11 +12,8 @@ import com.geekplus.maptest.entity.RobotLocation;
 import com.geekplus.maptest.entity.SystemAndRobotConfig;
 import lombok.Getter;
 import lombok.Setter;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.standard.expression.Each;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +22,7 @@ import java.util.Map;
 @Component
 @Setter
 @Getter
-public class NewRobotConfigHandler extends AbstractGetRobotConfig implements  GetRobotConfig{
+public class NewRobotConfigHandlerImp extends AbstractGetRobotConfig implements  GetRobotConfig{
 
 @Autowired
     SystemAndRobotConfig systemAndRobotConfig;

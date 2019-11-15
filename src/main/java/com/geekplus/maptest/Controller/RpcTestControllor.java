@@ -59,41 +59,41 @@ File testTollsFile=new  File(toolsfilePath);
 
 switch (mode.toUpperCase()){
     case  "DATABASE":
-        propertiesUtils.replacePro(sysFilepath,"map.resolver","transportDatabseMapResolver");
+        propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolver","transportDatabseMapResolver");
         propertiesUtils.replacePro(appliFilepath,"spring.profiles.active","global,netty,db,transport");
 
-        YmlUtils.addIntoYml(testTollsFile,"map.resolver","Database");
+        YmlUtils.addIntoYml(testTollsFile,"RobotConfigHangdler.resolver","Database");
 
 
 
         if (mapg.equals("with_start_bound")){
-            propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","with_start_bound");
+            propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolving.mode","with_start_bound");
 
         }else  if(mapg.equals("no_start_bound")){
-            propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","no_start_bound");
+            propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolving.mode","no_start_bound");
 
         }
         break;
 
     case "XML" :
-            propertiesUtils.replacePro(sysFilepath,"map.resolver","pickingXmlMapResolver");
+            propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolver","pickingXmlMapResolver");
             propertiesUtils.replacePro(appliFilepath,"spring.profiles.active","global,netty,db,picking");
-        propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","no_start_bound");
-        YmlUtils.addIntoYml(testTollsFile,"map.resolver","Xml");
+        propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolving.mode","no_start_bound");
+        YmlUtils.addIntoYml(testTollsFile,"RobotConfigHangdler.resolver","Xml");
         break;
     case "NOSHELFAREA" :
-        propertiesUtils.replacePro(sysFilepath,"map.resolver","transportDatabseMapResolver");
+        propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolver","transportDatabseMapResolver");
         propertiesUtils.replacePro(appliFilepath,"spring.profiles.active","global,netty,db,transport");
-        YmlUtils.addIntoYml(testTollsFile,"map.resolver","NOShelfArea");
+        YmlUtils.addIntoYml(testTollsFile,"RobotConfigHangdler.resolver","NOShelfArea");
 
 
 
 
         if (mapg.equals("with_start_bound")){
-            propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","with_start_bound");
+            propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolving.mode","with_start_bound");
 
         }else  if(mapg.equals("no_start_bound")){
-            propertiesUtils.replacePro(sysFilepath,"map.resolving.mode","no_start_bound");
+            propertiesUtils.replacePro(sysFilepath,"RobotConfigHangdler.resolving.mode","no_start_bound");
 
         }
         break;
@@ -277,9 +277,9 @@ list.add("/home/test-tools/maptest/resources/config/");
         response.getWriter().write( "<script>alert('上传成功"+file+"');</script>");
         response.getWriter().flush();*/
         //   response.getWriter().write( name);
-      /*  Map<String,Object> map= new HashMap<>();
-        map.put("msg","替换成功");
-        return map;*/
+      /*  Map<String,Object> RobotConfigHangdler= new HashMap<>();
+        RobotConfigHangdler.put("msg","替换成功");
+        return RobotConfigHangdler;*/
 //return "robot";
         //重定向url会变成/rpc/robot,以防刷新时post,get重复提交
 

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.geekplus.maptest.Common.JSONUtil;
 import com.geekplus.maptest.Componet.API.WebSocket.WebSocketClient;
 import com.geekplus.maptest.Componet.API.WebSocket.WebSocketClientStart;
+import com.geekplus.maptest.app.Configration.ClientConfigration;
 import com.geekplus.maptest.entity.FloorsMapCell;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
@@ -16,13 +17,15 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
+import java.security.Signature;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
-@SpringBootTest(classes = {MaptestApplicationTests.class,WebSocketClientStart.class, WebSocketClient.class})
+@SpringBootTest(classes = {MaptestApplicationTests.class,WebSocketClientStart.class, WebSocketClient.class, ClientConfigration.class})
 public class MaptestApplicationTests extends AbstractTestNGSpringContextTests {
 
 private  static Logger logger= LoggerFactory.getLogger(MaptestApplicationTests.class);
@@ -30,6 +33,8 @@ private  static Logger logger= LoggerFactory.getLogger(MaptestApplicationTests.c
     WebSocketClientStart webSocketClientStart;
     /*@Autowired
     WebSocketClient webSocketClient;*/
+    @Autowired
+    ClientConfigration clientConfigration;
 
 @Test
 public void master() throws NoSuchMethodException {
@@ -68,7 +73,7 @@ public void master() throws NoSuchMethodException {
         webSocketClientStart.send(info);
         checkeResponse(WebSocketClient.jsonMap, requestId, 10);
         logger.info("receive response info:{}", WebSocketClient.jsonMap.get("jsonMap"));
-        // String repKey = WebSocketClient.jsonMap.entrySet().stream().filter(map -> requestId.equals(map.getKey().toString())).map(map -> map.getKey()).collect(Collectors.joining());
+        // String repKey = WebSocketClient.jsonMap.entrySet().stream().filter(RobotConfigHangdler -> requestId.equals(RobotConfigHangdler.getKey().toString())).RobotConfigHangdler(RobotConfigHangdler -> RobotConfigHangdler.getKey()).collect(Collectors.joining());
         Assert.assertEquals(WebSocketClient.jsonMap.get(requestId).getJSONObject("response").getJSONObject("header").getString("code").toString(), "0");
 //结束后在aftermethod里移除map中的缓存，最好加上锁，并发时会导致问题
 
@@ -103,5 +108,22 @@ public  boolean checkeResponse(Map<String,JSONObject> map,String requestId ,int 
     }
     return  true;
 }
+
+    @Test
+    public void getObjectClass(){
+        ClientConfigration     client =new ClientConfigration();
+        Class<?> classs=client.getClass();
+
+        System.out.println(classs);
+        System.out.println(classs.getName());
+
+        for ( Method met : classs.getMethods()){
+            System.out.println( met.getName());
+
+
+        }
+
+
+    }
 
 }

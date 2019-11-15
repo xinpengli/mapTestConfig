@@ -29,7 +29,7 @@ public class WebSocketClient {
  private  static Logger logger= LoggerFactory.getLogger(WebSocketClient.class);
  public static Map<String,JSONObject> jsonMap= new ConcurrentHashMap();
 
-// public  map
+// public  RobotConfigHangdler
     @OnOpen
     public void onOpen(Session session) {
         logger.info("WebSocketClient connect success");
@@ -53,13 +53,15 @@ public class WebSocketClient {
         logger.info("something erro occur");
     }*/
 
-
+/**
+ * 把接收服务端 的消息保存到map集合，key是responseId，value为对应的json消息，用来做客户端发送后的响应校验
+ * */
     public static  void addInfo(String message){
         JSONObject jsonObject=  JSON.parseObject(message, JSONObject.class);
         System.out.println(JSONUtil.jsonToBean(message,JSONObject.class).getJSONObject("response").getJSONObject("header").getString("responseId").getClass());
         jsonMap.put(JSONUtil.jsonToBean(message,JSONObject.class).getJSONObject("response").getJSONObject("header").getString("responseId"),jsonObject);
 //        jsonMap.put(JSONUtil.jsonToBean(message,JSONObject.class).getJSONObject(""),);
-      /*  Map<String, String> map = new HashMap<>();
+      /*  Map<String, String> RobotConfigHangdler = new HashMap<>();
 
         this.setJsonMap(new HashMap<>(){"jsonMap"，message});*/
     }

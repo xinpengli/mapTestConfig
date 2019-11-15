@@ -1,10 +1,9 @@
-package com.geekplus.maptest.map;
+package com.geekplus.maptest.RobotConfigHangdler;
 
 import com.geekplus.maptest.entity.MapCell;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ import java.util.Map;
 @Getter
 @Setter
 public abstract class AbstractGetRobotConfig {
-   public List<Map<String, String>> shelfList = new ArrayList<>();
+   public static List<Map<String, String>> shelfList = new ArrayList<>();
     public <T extends MapCell> List<Map<String, String>> getShelfPlacements(List<T> list, String mode) {
 
         for (int j = 0; j < list.size(); j++) {

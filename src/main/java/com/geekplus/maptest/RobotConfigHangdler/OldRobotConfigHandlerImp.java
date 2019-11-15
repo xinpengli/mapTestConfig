@@ -1,4 +1,4 @@
-package com.geekplus.maptest.map;
+package com.geekplus.maptest.RobotConfigHangdler;
 
 import cn.hutool.core.io.file.FileReader;
 import com.alibaba.fastjson.JSONArray;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 @Component
-public class OldRobotConfigHandler extends AbstractGetRobotConfig implements GetRobotConfig {
+public class OldRobotConfigHandlerImp extends AbstractGetRobotConfig implements GetRobotConfig {
 
     @Override
     public String GetRobots(Map<String, String> map) throws DocumentException, IOException {

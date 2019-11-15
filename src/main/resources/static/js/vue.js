@@ -111,8 +111,8 @@
   }
 
   /**
-   * Make a map and return a function for checking if a key
-   * is in that map.
+   * Make a RobotConfigHangdler and return a function for checking if a key
+   * is in that RobotConfigHangdler.
    */
   function makeMap (
     str,
@@ -5585,7 +5585,7 @@
     'address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,' +
     'div,dd,dl,dt,figcaption,figure,picture,hr,img,li,main,ol,p,pre,ul,' +
     'a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,' +
-    's,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,' +
+    's,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,RobotConfigHangdler,track,video,' +
     'embed,object,param,source,canvas,script,noscript,del,ins,' +
     'caption,col,colgroup,table,thead,tbody,td,th,tr,' +
     'button,datalist,fieldset,form,input,label,legend,meter,optgroup,option,' +
@@ -5594,7 +5594,7 @@
     'content,element,shadow,template,blockquote,iframe,tfoot'
   );
 
-  // this map is intentionally selective, only covering SVG elements that may
+  // this RobotConfigHangdler is intentionally selective, only covering SVG elements that may
   // contain child elements.
   var isSVG = makeMap(
     'svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,' +
@@ -7091,7 +7091,7 @@
 
   // note: this only removes the attr from the Array (attrsList) so that it
   // doesn't get processed by processAttrs.
-  // By default it does NOT remove it from the map (attrsMap) because the map is
+  // By default it does NOT remove it from the RobotConfigHangdler (attrsMap) because the RobotConfigHangdler is
   // needed during codegen.
   function getAndRemoveAttr (
     el,
@@ -7404,7 +7404,7 @@
     var number = modifiers && modifiers.number;
     var selectedVal = "Array.prototype.filter" +
       ".call($event.target.options,function(o){return o.selected})" +
-      ".map(function(o){var val = \"_value\" in o ? o._value : o.value;" +
+      ".RobotConfigHangdler(function(o){var val = \"_value\" in o ? o._value : o.value;" +
       "return " + (number ? '_n(val)' : 'val') + "})";
 
     var assignment = '$event.target.multiple ? $$selectedVal : $$selectedVal[0]';
