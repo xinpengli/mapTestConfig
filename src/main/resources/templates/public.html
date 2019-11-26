@@ -18,21 +18,24 @@
 
 <body>
 
+<!--用ul时li 一定在<a>里，否则点击连击后会变色-->
+<!---->
+
 <div class="divBox">
     <div id="left_id" class="left" >
-        <ul class="list">
+        <ul class="primaryUl">
             <br>
-            <li style="width: 100px"><a  th:href="@{/rpc/robot} "><span style="color: black;font-weight: bold">服务配置重启<span></a></li>
+            <a  th:href="@{/rpc/robot} "><li class="list" style="width: 100px"><span>服务配置重启<span></li></a>
             <br>
-            <li style="width: 100px"><a th:href="@{/robot/robotconfig}"><span style="color: black;font-weight: bold">机器人配置<span></a></li>
+            <a th:href="@{/robot/robotconfig}"><li class="list" style="width: 100px"><span>机器人配置<span></li></a>
             <br>
-            <li style="width: 100px"><a href="http://172.16.3.19:62001/athenatest/"><span style="color: black;font-weight: bold">任务下发<span></a></li>
+            <a href="http://172.16.3.19:62001/athenatest/"> <li class="list" style="width: 100px"><span>任务下发<span></li></a>
             <br>
-            <li style="width: 100px"><a th:href="@{/rpc/athena}"><span style="color: black;font-weight: bold">athena日志<span></a></li>
+            <a th:href="@{/rpc/athena}"><li class="list" style="width: 100px"><span>athena日志<span></li></a>
             <br>
-            <li style="width: 100px"><a th:href="@{/rpc/athenatest}"><span style="color: black;font-weight: bold">Athenatest日志<span></a></li>
+            <a th:href="@{/rpc/athenatest}"><li class="list" style="width: 100px"><span>Athenatest日志<span></li></a>
             <br>
-            <li style="width: 100px"><a th:href="@{/robot/Tomapmodify}"><span style="color: black;font-weight: bold">地图工位修改<span></a></li>
+            <a th:href="@{/robot/Tomapmodify}"> <li  class="list" style="width: 100px"><span>地图工位修改<span></li></a>
         </ul>
 
     </div>
