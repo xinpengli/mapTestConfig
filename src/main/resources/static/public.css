@@ -3,31 +3,66 @@
     padding: 0px;
 }
 .divBox{
-    height:800px;
+    height:100%;
 
 }
 .left{
     float: left;
     width: 200px;
     height: 100%;
-    background: #9FB4D9;
+    background: #3c8dbc;
 }
 .list{
     font-weight: bold;
     margin: 0 20px;
+
+
 }
+/*color是定义字体的颜色;
+
+backgroud可以定义背景的一切内容，包括颜色、图片以及图片位置;
+
+background-color只能定义背景的颜色
+border-radius:添加圆角边框
+border:1px solid #dcdfe6; 设置控件的边框大小颜色
+ padding: 2px 15px;设置控件的边距，比如文本框就时文字距离文本左右15，上下2px ,四个是上，下，左，右，一个是全部的四个方向
+*/
 .right{
     margin-left: 200px;
-
+    background: #e5e9ec;
     height: 100%;
-}
-.botom{
-    float: bottom;
+    color: #303133;
 
-    background:#9FB4D9;
-    height: 100%;
-    width: 100%;
 }
+.radius{
+    /**/
+    border-radius: 4px;
+    border:1px solid #dcdfe6;
+    padding: 2px 15px;
+
+
+}
+
+/**
+background:url(./img/提交.jpg);按钮设置背景图片，相对路径同级路径为./
+*/
+.submitStyle{
+    background:url(./img/blue.png);
+    padding: 2px 15px;
+    border:1px solid #66b1ff;
+    border-radius: 4px;
+    color: #fff;
+
+}
+/*.botom{*/
+
+
+    /*float: bottom;*/
+
+    /*background:#3c8dbc;*/
+    /*height: 100%;*/
+    /*width: 200px;*/
+/*}*/
 
 .footer{
     width: 100%;

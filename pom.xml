@@ -249,6 +249,7 @@
                         <exclude>*.xml</exclude>
                         <exclude>*.properties</exclude>
                         <exclude>*.yml</exclude>
+                        <exclude>*.yaml</exclude>
                         <exclude>*.sh</exclude>
                         <exclude>templates/</exclude>
                     </excludes>
@@ -325,6 +326,7 @@
                                         <include>*.xml</include>
                                         <include>*.properties</include>
                                         <include>*.yml</include>
+                                        <include>*.yaml</include>
                                         <include>*.sh</include>
                                         <include>templates/</include>
                                     </includes>

@@ -9,8 +9,11 @@
 </head>
 <!--
 <body style="background-image:url(img/bg.jpg);background-repeat:no-repeat">
+定义多个class属性时 空格隔开，
 -->
+
 <body>
+
 <script type="text/javascript">
 
 
@@ -177,6 +180,7 @@
 
 
 </script>
+
 <div class="divBox">
     <div th:replace="public :: #left_id"></div>
     <div class="right">
@@ -184,7 +188,7 @@
             <br>
             <form id="uploadForm-new" th:action="@{/robot/config}"    enctype="multipart/form-data">
 
-            <select id="s-version" class="s-version" name="Sversion">
+            <select id="s-version" class="s-version radius" name="Sversion">
                 <option value="NEW" >新模拟器</option>
                 <option value="OLD" selected>旧模拟器</option>
             </select>
@@ -192,22 +196,24 @@
             <br>
 
                 机器人配置数量：<input type="text" name="robotNum"
-                               id="robotNum-new"/>
-                RMS服务器IP：<input type="text" name="server" id="server-new"/>
+                               id="robotNum-new" class="radius"/>
+                RMS服务器IP：<input type="text" name="server" id="server-new" class="radius"/>
 
-                rms版本： <select id="version" name="version" class="language-code form-control" >
+                rms版本： <select id="version" name="version" class="language-code form-control radius" >
                 <option value="2.0" selected>3.2以下</option>
                 <option value="3.2">3.2以上</option>
             </select>
+                <br>
+                <br>
 
-                <div id="old"><input id="xml"  type="radio" name="mode" checked="checked" value="xml" />XML
+                <div id="old"><input id="xml"  type="radio" name="mode" checked="checked" value="xml"/>XML
                     <input type="radio" name="mode" value="database"/>DataBase</div>
             <div id="new" style="display: none" > <input  type="radio" name="mode" value="cellcode"/>CellCode</div>
                 <div id="fusion1" style="display: none"> <input type="radio" name="mode" value="fusion"/>FUSION </div>
 
 
-
-                <input type="submit" value="发送"/>
+                <br>
+                <input type="submit" value="发送" class="submitStyle"/>
             </form>
 
 
@@ -215,12 +221,12 @@
         <br>
         <div>
             <label>机器人配置结果：</label><br/>
-            <textarea     id="responseText" style="width: 1000px; height: 200px;"></textarea><br/>
+            <textarea class="radius"    id="responseText" style="width: 1000px; height: 200px;"></textarea><br/>
 
         </div>
     </div>
 
-    <div th:replace="public :: #botom_id">123</div>
+    <!--<div th:replace="public :: #botom_id">123</div>-->
 
 
 </div>
